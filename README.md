@@ -1,2 +1,6 @@
 # stock-market-recommender
-- A sample implementation for clean architecture following the latest android development by google. 
+- A sample implementation of clean architecture following the latest android development by google. 
+- Used latest Android Jetpack 
+- Used Jetpack Compose 
+- Multimodule architecture 
+- Unit testing 
