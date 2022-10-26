@@ -42,7 +42,7 @@ fun RecommendationScreen(
         Box( modifier = Modifier
             .fillMaxSize()
         ) {
-            Text(text = context.getString(viewModel.getGreeting().resId))
+
         }
     }
 }

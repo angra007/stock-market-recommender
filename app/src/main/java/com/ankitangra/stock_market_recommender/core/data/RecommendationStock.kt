@@ -1,14 +1,13 @@
 package com.ankitangra.stock_market_recommender.core.data
 
-data class Stock (
+data class RecommendationStock (
     val id: String,
     val symbol: String,
-    val price: String,
     val value: String,
     val currency: String,
-    val socialMedia: SocialMedia
+    val socialMedia: RecommendationSocialMedia
 )
 
-data class SocialMedia(
+data class RecommendationSocialMedia(
     val mediaCount: String,
 )

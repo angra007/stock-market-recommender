@@ -1,11 +1,11 @@
 package com.ankitangra.stock_market_recommender.core.domain.usecase
 
-import com.ankitangra.stock_market_recommender.core.data.Stock
+import com.ankitangra.stock_market_recommender.core.data.RecommendationStock
 
 
 class RecommendationEngine {
 
-    operator fun invoke(stock: Stock): RecommendationResult {
+    operator fun invoke(stock: RecommendationStock): RecommendationResult {
         return RecommendationResult.Buy
     }
 

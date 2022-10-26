@@ -29,14 +29,12 @@ class RecommendationViewModel @Inject constructor(
         }
     }
 
-    fun getGreeting(): UiText.StringResource {
-        val stock = getRecommendations()
-        val result = recommendationEngine(stock)
-        return if (result == RecommendationEngine.RecommendationResult.Buy) {
-            UiText.StringResource(R.string.buy)
-        } else {
-            UiText.StringResource(R.string.sell)
-        }
+    fun queryStock(
+        query: String
+    ) {
+       viewModelScope.launch {
+            val stock = getRecommendations(symbol = query)
+       }
     }
 
 }

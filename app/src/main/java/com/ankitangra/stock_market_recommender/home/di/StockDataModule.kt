@@ -2,6 +2,8 @@ package com.ankitangra.stock_market_recommender.home.di
 
 import com.ankitangra.stock_market_recommender.home.home_data.remote.api.StockApi
 import com.ankitangra.stock_market_recommender.home.home_data.remote.mock_remote.StockMockRemote
+import com.ankitangra.stock_market_recommender.home.home_data.repository.RecommendationRepositoryImpl
+import com.ankitangra.stock_market_recommender.home.home_domain.repository.RecommendationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,25 +26,33 @@ object StockDataModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideStockApi(
-        okHttpClient: OkHttpClient
-    ): StockApi {
-        return Retrofit.Builder()
-            .baseUrl(StockApi.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-            .create()
+//    @Provides
+//    @Singleton
+//    fun provideStockApi(
+//        okHttpClient: OkHttpClient
+//    ): StockApi {
+//        return Retrofit.Builder()
+//            .baseUrl(StockApi.BASE_URL)
+//            .addConverterFactory(MoshiConverterFactory.create())
+//            .client(okHttpClient)
+//            .build()
+//            .create()
+//
+//    }
 
-    }
-
     @Provides
-    @Named("Mock_API")
     @Singleton
     fun provideStockMockApi(): StockApi {
         return StockMockRemote()
     }
 
+    @Provides
+    @Singleton
+    fun provideRecommendationRepository(
+        stockApi: StockApi
+    ): RecommendationRepository {
+        return RecommendationRepositoryImpl (
+            stockApi
+        )
+    }
 }
