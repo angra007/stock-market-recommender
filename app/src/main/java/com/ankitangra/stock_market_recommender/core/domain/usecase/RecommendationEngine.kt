@@ -1,7 +1,6 @@
 package com.ankitangra.stock_market_recommender.core.domain.usecase
 
 import com.ankitangra.stock_market_recommender.core.data.Stock
-import com.ankitangra.stock_market_recommender.core.domain.model.RecommendationResult
 
 
 class RecommendationEngine {
@@ -10,4 +9,9 @@ class RecommendationEngine {
         return RecommendationResult.Buy
     }
 
+    sealed class RecommendationResult {
+        object Buy: RecommendationResult()
+        object Sell: RecommendationResult()
+        object Hold: RecommendationResult()
+    }
 }

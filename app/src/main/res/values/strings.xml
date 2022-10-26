@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">stock-market-recommender</string>
     <string name="header_title">Recommendation</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="hold">Hold</string>
 </resources>
