@@ -67,6 +67,11 @@ dependencies {
     implementation(Coil.coilCompose)
 
     implementation(Google.material)
+
+    implementation(Retrofit.okHttp)
+    implementation(Retrofit.retrofit)
+    implementation(Retrofit.okHttpLoggingInterceptor)
+    implementation(Retrofit.moshiConverter)
     
     testImplementation(Testing.junit4)
     testImplementation(Testing.junitAndroidExt)
