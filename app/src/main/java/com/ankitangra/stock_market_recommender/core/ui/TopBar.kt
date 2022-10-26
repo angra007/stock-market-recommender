@@ -28,5 +28,4 @@ fun TopBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 2.dp
     )
-
 }
