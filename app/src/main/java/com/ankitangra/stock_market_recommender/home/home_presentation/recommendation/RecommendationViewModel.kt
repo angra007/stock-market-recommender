@@ -1,4 +1,4 @@
-package com.ankitangra.stock_market_recommender.home.home_presentation
+package com.ankitangra.stock_market_recommender.home.home_presentation.recommendation
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
