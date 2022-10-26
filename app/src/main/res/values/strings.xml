@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">stock-market-recommender</string>
+    <string name="back">Back</string>
 </resources>
