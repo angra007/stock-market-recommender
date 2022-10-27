@@ -15,15 +15,15 @@ class StockMockRemote: StockApi {
 
     private fun getMockStocks(): StockDto {
 
-        val stock1 = Stock ( id = "", name = "", symbol = "", currency = "", value = "",socialMedia = SocialMedia (
+        val stock1 = Stock ( id = "Apple", name = "Apple", symbol = "", currency = "", value = "",socialMedia = SocialMedia (
             media_count = 3
         ))
 
-        val stock2 = Stock ( id = "", name = "", symbol = "", currency = "", value = "",socialMedia = SocialMedia (
+        val stock2 = Stock ( id = "Google", name = "Google", symbol = "", currency = "", value = "",socialMedia = SocialMedia (
             media_count = 3
         ))
 
-        val stock3 = Stock ( id = "", name = "", symbol = "", currency = "", value = "",socialMedia = SocialMedia (
+        val stock3 = Stock ( id = "Microsoft", name = "Microsoft", symbol = "", currency = "", value = "",socialMedia = SocialMedia (
             media_count = 3
         ))
 

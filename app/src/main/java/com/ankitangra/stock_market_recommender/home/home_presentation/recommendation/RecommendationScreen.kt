@@ -3,11 +3,12 @@ package com.ankitangra.stock_market_recommender.home.home_presentation.recommend
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.flow.collect
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,15 +20,14 @@ import com.ankitangra.stock_market_recommender.core.ui.TopBar
 fun RecommendationScreen(
     viewModel: RecommendationViewModel = hiltViewModel()
 ) {
-
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Loading -> {
                     if (event.show) {
-                        println("Show")
+                        println("Show Loading Indicator")
                     } else {
-                        println("Hide")
+                        println("Hide Loading Indicator")
                     }
                 }
                 else -> Unit
@@ -35,7 +35,7 @@ fun RecommendationScreen(
         }
     }
 
-    val context = LocalContext.current
+    val state = viewModel.state
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(stringResource(id = R.string.header_title))
@@ -43,6 +43,11 @@ fun RecommendationScreen(
             .fillMaxSize()
         ) {
 
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+               items(state.stocks) { stock ->
+                   Text(text = stock.id)
+               }
+            }
         }
     }
 }
