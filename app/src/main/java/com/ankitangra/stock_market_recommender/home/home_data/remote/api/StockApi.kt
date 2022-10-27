@@ -10,6 +10,8 @@ interface StockApi {
        pageSize: Int
     ): StockDto
 
+    suspend fun getAllStocks(): StockDto
+
     companion object {
         const val BASE_URL = ""
     }

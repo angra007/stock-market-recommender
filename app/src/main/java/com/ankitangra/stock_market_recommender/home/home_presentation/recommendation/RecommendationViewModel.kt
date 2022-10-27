@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ankitangra.core.util.*
 import com.ankitangra.stock_market_recommender.R
 import com.ankitangra.stock_market_recommender.core.domain.usecase.RecommendationEngine
+import com.ankitangra.stock_market_recommender.home.home_domain.usecase.GetAllStocksUseCase
 import com.ankitangra.stock_market_recommender.home.home_domain.usecase.RecommendationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RecommendationViewModel @Inject constructor(
+    private val getAllStocksUseCase: GetAllStocksUseCase,
     private val getRecommendations: RecommendationUseCase,
     private val recommendationEngine: RecommendationEngine
 ): ViewModel() {
@@ -21,11 +23,29 @@ class RecommendationViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent> ()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    fun getStocks() {
+    init {
+        fetchStocks()
+    }
+
+    private fun fetchStocks() {
         viewModelScope.launch {
             _uiEvent.send(
-                UiEvent.ShowLoading
+                UiEvent.Loading(show = true)
             )
+            getAllStocksUseCase()
+                .onSuccess {
+                    _uiEvent.send(
+                        UiEvent.Loading(show = false)
+                    )
+                    println("Here is the list")
+                }
+                .onFailure {
+                    it.printStackTrace()
+                    _uiEvent.send(
+                        UiEvent.Loading(show = false)
+                    )
+                    println("Here is the error")
+                }
         }
     }
 

@@ -21,10 +21,6 @@ fun RecommendationScreen(
 ) {
 
     LaunchedEffect(key1 = true) {
-        viewModel.getStocks()
-    }
-
-    LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.ShowLoading -> {

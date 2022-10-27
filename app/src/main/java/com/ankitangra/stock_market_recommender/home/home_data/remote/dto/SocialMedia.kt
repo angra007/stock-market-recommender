@@ -4,5 +4,5 @@ import com.squareup.moshi.Json
 
 data class SocialMedia(
     @field:Json(name = "media_count")
-    val media_count: String
+    val media_count: Int
 )

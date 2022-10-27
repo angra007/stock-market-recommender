@@ -8,12 +8,25 @@ import com.ankitangra.stock_market_recommender.home.home_domain.repository.Recom
 class RecommendationRepositoryImpl(
     private val stockApi: StockApi
 ): RecommendationRepository {
-    override suspend fun getStocks(symbol: String): Result<List<RecommendationStock>> {
+    override suspend fun getRecommendation(
+        symbol: String?
+    ): Result<List<RecommendationStock>> {
         return try {
             val stockDto = stockApi.getStocks(
                 page = "1",
                 pageSize = 2
             )
+            val recommendedStocks = stockDto.stocks.map { it.toRecommendationStock() }
+            Result.success(recommendedStocks)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getAllStocks(): Result<List<RecommendationStock>> {
+        return try {
+            val stockDto = stockApi.getAllStocks()
             val recommendedStocks = stockDto.stocks.map { it.toRecommendationStock() }
             Result.success(recommendedStocks)
         } catch (e: Exception) {
