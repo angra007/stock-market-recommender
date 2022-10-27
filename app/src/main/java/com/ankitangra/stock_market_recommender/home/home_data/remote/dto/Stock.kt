@@ -16,7 +16,7 @@ data class Stock(
     val currency: String,
 
     @field:Json(name = "value")
-    val value: String,
+    val value: Double,
 
     @field:Json(name = "socialMedia")
     val socialMedia: SocialMedia
