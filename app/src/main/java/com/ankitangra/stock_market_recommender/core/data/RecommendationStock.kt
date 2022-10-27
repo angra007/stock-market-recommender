@@ -9,5 +9,5 @@ data class RecommendationStock (
 )
 
 data class RecommendationSocialMedia(
-    val mediaCount: String,
+    val mediaCount: Int,
 )

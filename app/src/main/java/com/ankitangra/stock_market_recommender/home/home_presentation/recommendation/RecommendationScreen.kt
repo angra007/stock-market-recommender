@@ -23,8 +23,12 @@ fun RecommendationScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is UiEvent.ShowLoading -> {
-
+                is UiEvent.Loading -> {
+                    if (event.show) {
+                        println("Show")
+                    } else {
+                        println("Hide")
+                    }
                 }
                 else -> Unit
             }
