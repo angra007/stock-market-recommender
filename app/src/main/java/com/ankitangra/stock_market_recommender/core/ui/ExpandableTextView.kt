@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import com.ankitangra.stock_market_recommender.R
 
 @Composable
@@ -27,22 +29,22 @@ fun ExpandableTextView(
     onItemSelected: (String) -> Unit,
     toggleState: () -> Unit
 ) {
-
-    val localSpacing = LocalSpacing.current
-
     Box(
         modifier = modifier
-            .fillMaxHeight()
-            .padding(start = localSpacing.spaceSmall)
             .background(Color.White)
     ) {
         OutlinedTextField(
             value = textValue,
             readOnly = true,
+            enabled = false,
             onValueChange = {
 
             },
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable {
+                toggleState ()
+            },
             label = {
                 Text(text = label)
             },
@@ -55,37 +57,18 @@ fun ExpandableTextView(
             }
         )
 
-        ExpandableMenu(
+        DropdownMenu(
             expanded = expanded,
-            items = items,
-            onSelect = {
-                onItemSelected(it)
-            },
             onDismissRequest = {
-                toggleState ()
-            }
-        )
-    }
-}
-
-@Composable
-fun ExpandableMenu(
-    expanded: Boolean,
-    items : List<String>,
-    onSelect:(String) -> Unit,
-    onDismissRequest: () -> Unit,
-) {
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = {
-            onDismissRequest()
-        },
-    )  {
-        items.forEachIndexed { index, stock ->
-            DropdownMenuItem(onClick = {
-                onSelect(items[index])
-            }) {
-                Text(stock)
+                toggleState()
+            },
+        )  {
+            items.forEachIndexed { index, stock ->
+                DropdownMenuItem(onClick = {
+                    onItemSelected(items[index])
+                }) {
+                    Text(stock)
+                }
             }
         }
     }

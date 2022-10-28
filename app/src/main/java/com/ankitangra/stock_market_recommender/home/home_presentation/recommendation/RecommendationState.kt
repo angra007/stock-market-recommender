@@ -1,7 +1,7 @@
 package com.ankitangra.stock_market_recommender.home.home_presentation.recommendation
 
-import com.ankitangra.stock_market_recommender.core.data.RecommendationStock
+import com.ankitangra.stock_market_recommender.home.home_domain.model.Recommendation
 
 data class RecommendationState (
-      val stocks : List<RecommendationStock> = emptyList()
+      val recommendation : List<Recommendation> = emptyList()
 )

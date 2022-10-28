@@ -26,8 +26,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class RecommendationViewModel @Inject constructor(
     private val getAllStocksUseCase: GetAllStocksUseCase,
-    private val getRecommendations: RecommendationUseCase,
-    private val recommendationEngine: RecommendationEngine
+    private val getRecommendation: RecommendationUseCase
 ): ViewModel() {
 
     private val _uiEvent = Channel<UiEvent> ()
@@ -39,10 +38,16 @@ class RecommendationViewModel @Inject constructor(
     var currentTimeState by mutableStateOf("10")
         private set
 
+    var currentSocialMediaCountState by mutableStateOf("5")
+        private set
+
     var stockSelectedState by mutableStateOf(false)
         private set
 
     var timeSelectedState by mutableStateOf(false)
+        private set
+
+    var socialMediaCountSelectedState by mutableStateOf(false)
         private set
 
     var state by mutableStateOf(RecommendationState())
@@ -50,6 +55,34 @@ class RecommendationViewModel @Inject constructor(
 
     val stocks = listOf("Apple","Google","Microsoft","Netflix")
     val days = listOf("10","20","30","45","90","180","200")
+    val socialCounts = listOf("2","3","4","5","<=10>","<=50","<=100")
+
+    var allStocks = listOf<RecommendationStock>()
+
+    init {
+        fetchAllStocks()
+    }
+
+    private fun fetchAllStocks() {
+        viewModelScope.launch {
+            _uiEvent.send(
+                UiEvent.Loading(true)
+            )
+            getAllStocksUseCase()
+                .onSuccess {
+                    _uiEvent.send(
+                        UiEvent.Loading(false)
+                    )
+                    allStocks = it
+                }
+                .onFailure {
+                    _uiEvent.send(
+                        UiEvent.Loading(false)
+                    )
+                }
+        }
+    }
+
 
     fun onEvent(event: RecommendationScreenEvent) {
         when (event) {
@@ -61,14 +94,29 @@ class RecommendationViewModel @Inject constructor(
                 currentTimeState = event.days
                 timeSelectedState = !timeSelectedState
             }
+            is RecommendationScreenEvent.OnSocialMediaCountSelected -> {
+                currentSocialMediaCountState = event.value
+                socialMediaCountSelectedState = !socialMediaCountSelectedState
+            }
             is  RecommendationScreenEvent.OnFindClicked -> {
-
+                val stock = allStocks.find {
+                    it.symbol == currentStockState
+                }
+                stock?.let {
+                    val recommendation = getRecommendation(it, currentTimeState.toInt(), currentSocialMediaCountState.toInt())
+                    state = state.copy(
+                        recommendation = recommendation
+                    )
+                }
             }
             is RecommendationScreenEvent.OnToggleStockSelectedState -> {
                 stockSelectedState = !stockSelectedState
             }
             is RecommendationScreenEvent.OnToggleDaysSelectedState -> {
                 timeSelectedState = !timeSelectedState
+            }
+            is RecommendationScreenEvent.OnToggleSocialMediaSelectedState -> {
+                socialMediaCountSelectedState = !socialMediaCountSelectedState
             }
         }
     }

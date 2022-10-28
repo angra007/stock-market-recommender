@@ -1,5 +1,6 @@
 package com.ankitangra.stock_market_recommender.home.di
 
+import com.ankitangra.stock_market_recommender.core.domain.usecase.RecommendationEngine
 import com.ankitangra.stock_market_recommender.home.home_domain.repository.RecommendationRepository
 import com.ankitangra.stock_market_recommender.home.home_domain.usecase.GetAllStocksUseCase
 import com.ankitangra.stock_market_recommender.home.home_domain.usecase.RecommendationUseCase
@@ -16,9 +17,10 @@ class HomeModule {
     @Provides
     @ViewModelScoped
     fun provideRecommendationUseCase(
-        recommendationRepository: RecommendationRepository
+        recommendationRepository: RecommendationRepository,
+        recommendationEngine: RecommendationEngine
     ): RecommendationUseCase {
-        return RecommendationUseCase(recommendationRepository)
+        return RecommendationUseCase(recommendationRepository, recommendationEngine)
     }
 
     @Provides
