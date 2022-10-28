@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -96,8 +97,7 @@ fun RecommendationScreen(
                         label = "Select a stock",
                         modifier = Modifier
                             .weight(1f)
-                            .fillMaxHeight()
-                            .padding(end = localSpacing.spaceSmall),
+                            .fillMaxHeight(),
                         items = listOf("Apple","Google","Microsoft","Netflix"),
                         expanded = stockSelectedState,
                         onItemSelected = {
@@ -115,7 +115,7 @@ fun RecommendationScreen(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()
-                            .padding(end = localSpacing.spaceSmall),
+                            .padding(start = localSpacing.spaceSmall),
                         items = listOf("10","20","30","45","90","180","200"),
                         expanded = timeSelectedState,
                         onItemSelected = {
@@ -126,6 +126,17 @@ fun RecommendationScreen(
                             timeSelectedState = !timeSelectedState
                         }
                     )
+
+                    Button(
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .fillMaxHeight(),
+                        onClick = {
+
+                        }) {
+                        Text(text = "Find")
+                    }
+
                 }
 
                 Spacer(modifier = Modifier.height(localSpacing.spaceSmall))

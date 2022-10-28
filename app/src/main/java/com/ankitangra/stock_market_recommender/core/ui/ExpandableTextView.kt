@@ -48,7 +48,7 @@ fun ExpandableTextView(
             },
             trailingIcon = {
                 Icon(
-                    painter = if (expanded) { painterResource(id = R.drawable.ic_launcher_background) } else { painterResource(id = R.drawable.ic_launcher_foreground) },
+                    painter = if (expanded) { painterResource(id = R.drawable.ic_arrow_up) } else { painterResource(id = R.drawable.ic_arrow_down) },
                     contentDescription = "",
                     Modifier.clickable { toggleState () }
                 )
