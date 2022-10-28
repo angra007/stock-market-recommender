@@ -23,7 +23,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,21 +60,6 @@ fun RecommendationScreen(
     val state = viewModel.state
     val localSpacing = LocalSpacing.current
 
-    var currentStockState by remember {
-        mutableStateOf("Apple")
-    }
-    var stockSelectedState by remember {
-        mutableStateOf(false)
-    }
-
-    var currentTimeState by remember {
-        mutableStateOf("10")
-    }
-    var timeSelectedState by remember {
-        mutableStateOf(false)
-    }
-
-
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(stringResource(id = R.string.header_title))
         Box( modifier = Modifier
@@ -93,37 +77,35 @@ fun RecommendationScreen(
                 ) {
 
                     ExpandableTextView(
-                        textValue = currentStockState,
+                        textValue = viewModel.currentStockState,
                         label = "Select a stock",
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
-                        items = listOf("Apple","Google","Microsoft","Netflix"),
-                        expanded = stockSelectedState,
+                        items = viewModel.stocks,
+                        expanded = viewModel.stockSelectedState,
                         onItemSelected = {
-                            currentStockState = it
-                            stockSelectedState = !stockSelectedState
+                            viewModel.onEvent(RecommendationScreenEvent.OnStockSelected(it))
                         },
                         toggleState = {
-                            stockSelectedState = !stockSelectedState
+                            viewModel.onEvent(RecommendationScreenEvent.OnToggleStockSelectedState)
                         }
                     )
 
                     ExpandableTextView(
-                        textValue = currentTimeState,
+                        textValue = viewModel.currentTimeState,
                         label = "Select a time window (Days)",
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()
                             .padding(start = localSpacing.spaceSmall),
-                        items = listOf("10","20","30","45","90","180","200"),
-                        expanded = timeSelectedState,
+                        items = viewModel.days,
+                        expanded = viewModel.timeSelectedState,
                         onItemSelected = {
-                            currentTimeState = it
-                            timeSelectedState = !timeSelectedState
+                            viewModel.onEvent(RecommendationScreenEvent.OnDaysSelected(it))
                         },
                         toggleState = {
-                            timeSelectedState = !timeSelectedState
+                            viewModel.onEvent(RecommendationScreenEvent.OnToggleDaysSelectedState)
                         }
                     )
 
